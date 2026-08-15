@@ -12,7 +12,6 @@ class Messages:
     REQUIRED_FIELDS = 'Email, password and name are required fields'
     INCORRECT_CREDENTIALS = 'email or password are incorrect'
     INGREDIENTS_REQUIRED = 'Ingredient ids must be provided'
-    NOT_AUTHORISED = 'You should be authorised'
 
 
 class TestData:

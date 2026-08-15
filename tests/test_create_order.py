@@ -31,6 +31,7 @@ class TestCreateOrder:
 
         assert response.status_code == 200
         assert response.json()['success'] is True
+        assert response.json()['order']['number'] is not None
 
     @allure.title('Создание заказа без ингредиентов')
     @allure.description('Проверяем, что пустой список ингредиентов не принимается')
@@ -45,6 +46,7 @@ class TestCreateOrder:
         )
 
         assert response.status_code == 400
+        assert response.json()['success'] is False
         assert response.json()['message'] == Messages.INGREDIENTS_REQUIRED
 
     @allure.title('Создание заказа с неверным хешем ингредиента')
@@ -60,3 +62,4 @@ class TestCreateOrder:
         )
 
         assert response.status_code == 500
+        assert 'Internal Server Error' in response.text
