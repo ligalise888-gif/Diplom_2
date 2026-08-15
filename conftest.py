@@ -13,6 +13,7 @@ def user_data():
 @pytest.fixture
 def created_user(user_data):
     response = requests.post(Urls.BASE_URL + Urls.REGISTER, json=user_data)
+    assert response.status_code == 200, f'Не удалось создать пользователя: {response.text}'
     access_token = response.json().get('accessToken')
 
     yield user_data, access_token
@@ -24,5 +25,7 @@ def created_user(user_data):
 @pytest.fixture
 def ingredient_ids():
     response = requests.get(Urls.BASE_URL + Urls.INGREDIENTS)
-    data = response.json()['data']
+    assert response.status_code == 200, f'Не удалось получить список ингредиентов: {response.text}'
+    data = response.json().get('data', [])
+    assert len(data) >= 2, 'В ответе меньше двух ингредиентов'
     return [data[0]['_id'], data[1]['_id']]
